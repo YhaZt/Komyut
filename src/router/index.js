@@ -15,23 +15,42 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'Komyut-Home',
       component: () => import('../views/Home/home-index.vue')
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'Komyut-Login',
       component: () => import('../views/Account/login.vue')
     },
     {
       path: '/register',
-      name: 'Register',
+      name: 'Komyut-Register',
       component: () => import('../views/Account/register.vue')
     },
     {
       path: '/map',
-      name: 'Map',
-      component: () => import('../views/Passenger/map.vue')
+      name: 'Komyut-Map',
+      component: () => import('../views/Passenger/map.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/plan',
+      name: 'Komyut-Plan',
+      component: () => import('../views/Passenger/plan.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/profile',
+      name: 'Komyut-Profile',
+      component: () => import('../views/Passenger/profile.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/fare',
+      name: 'Komyut-Fare',
+      component: () => import('../views/Passenger/fare.vue'),
+      meta: { requiresAuth: true }
     },
     {
       // meta: { requiresAuth: true }

@@ -2,8 +2,8 @@
 <section class="bg-gray-50 dark:bg-gray-900">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
-            Komyut
+            <img class="w-8 h-8 mr-2" src="../../../public/komyut-logo.png" alt="logo" />
+            K<span class="text-blue-600 dark:text-blue-500">omyut</span>
         </a>
         <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -76,48 +76,33 @@ export default {
     },
     methods: {
     async signUp() {
-        // Validate passwords match
         if (this.password !== this.confirmPassword) {
             toastr.error("Passwords do not match.");
             return;
         }
-
-        // Check if terms are accepted
         if (!this.acceptedTerms) {
             toastr.error("You must accept the Terms and Conditions.");
             return;
         }
-
-        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(this.email)) {
             toastr.error("Please enter a valid email address.");
             return;
         }
-
         try {
-            // Create user with email and password
             const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
             const user = userCredential.user;
-
-            // Log user details
             console.log("User signed up:", user);
-
-            // Save username, email, and creation date to Firestore
             await setDoc(doc(db, 'users', user.uid), {
-                username: this.username, // Using the input username directly
-                email: user.email, // Using the email from user
+                username: this.username,
+                email: user.email,
                 createdAt: new Date(),
             });
-
-            // Clear form fields after saving to Firestore
             this.username = "";
             this.email = "";
             this.password = "";
             this.confirmPassword = "";
-            this.acceptedTerms = false; // Reset the checkbox if needed
-
-            // Notify success
+            this.acceptedTerms = false;
             toastr.success("Signed up successfully!");
             this.$router.push('/login');
         } catch (error) {
